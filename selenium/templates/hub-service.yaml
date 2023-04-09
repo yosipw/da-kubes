@@ -28,7 +28,7 @@ spec:
   selector:
     app: {{ template "selenium.hub.fullname" . }}
 ---
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ template "selenium.hub.fullname" . }}
@@ -41,6 +41,9 @@ spec:
     http:
       paths:
       - path: /
+        pathType: Prefix
         backend:
-          serviceName: {{ template "selenium.hub.fullname" . }}
-          servicePort: 4444
+          service:
+            name:  {{ template "selenium.hub.fullname" . }}
+            port:
+              number: 4444
